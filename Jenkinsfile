@@ -15,21 +15,20 @@ pipeline {
         }
         stage('Deploy & Start Apps') {
             steps {
-                // Copy all source files to the server directories
                 bat 'xcopy /E /Y /I "%WORKSPACE%\\frontend\\*" "%FRONTEND_DIR%"'
                 bat 'xcopy /E /Y /I "%WORKSPACE%\\backend\\*" "%BACKEND_DIR%"'
                 
-                // Start Frontend (assuming it runs on port 4200)
+                // Start Frontend using npx
                 dir("${FRONTEND_DIR}") {
                     bat 'npm install'
-                    bat 'pm2 restart frontend || pm2 start npm --name "frontend" -- start'
+                    bat 'npx -y pm2 restart frontend || npx -y pm2 start npm --name "frontend" -- start'
                 }
                 
-                // Start Backend (assuming it runs on port 3000)
+                // Start Backend using npx
                 dir("${BACKEND_DIR}") {
                     bat 'npm install'
                     bat 'npx prisma generate'
-                    bat 'pm2 restart backend || pm2 start npm --name "backend" -- start'
+                    bat 'npx -y pm2 restart backend || npx -y pm2 start npm --name "backend" -- start'
                 }
             }
         }
