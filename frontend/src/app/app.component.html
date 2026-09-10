@@ -1,0 +1,20 @@
+<div class="glass-panel" style="width: 600px; max-width: 90vw;">
+  <h1>✨ My Tasks</h1>
+  
+  <div class="tabs">
+    <button class="tab-btn" [class.active]="activeTab === 'active'" (click)="switchTab('active')">
+      Active Tasks
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'history'" (click)="switchTab('history')">
+      History
+    </button>
+  </div>
+
+  <div *ngIf="activeTab === 'active'">
+    <app-todo-list></app-todo-list>
+  </div>
+  
+  <div *ngIf="activeTab === 'history'">
+    <app-todo-history></app-todo-history>
+  </div>
+</div>

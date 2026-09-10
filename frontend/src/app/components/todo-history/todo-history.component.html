@@ -1,0 +1,26 @@
+<div class="list-container">
+  <div *ngIf="history.length === 0" class="empty-state">
+    No history yet. Get to work! 🚀
+  </div>
+  
+  <div class="history-item" *ngFor="let item of history">
+    <div class="history-content">
+      <div class="history-title-row">
+        <span class="todo-title" [class.deleted]="item.action === 'DELETED'">
+          {{ item.title }}
+        </span>
+        <span class="badge" [ngClass]="item.action === 'COMPLETED' ? 'badge-success' : 'badge-danger'">
+          {{ item.action }}
+        </span>
+      </div>
+      <div class="todo-badges" style="margin-top: 0.5rem; display: flex; gap: 0.5rem; font-size: 0.8rem;">
+        <span class="badge" *ngIf="item.priority">Priority: {{ item.priority }}</span>
+        <span class="badge" *ngIf="item.category">Category: {{ item.category }}</span>
+        <span class="badge" *ngIf="item.dueDate">Due: {{ item.dueDate | date:'shortDate' }}</span>
+      </div>
+    </div>
+    <div class="history-meta">
+      {{ item.actionAt | date:'medium' }}
+    </div>
+  </div>
+</div>

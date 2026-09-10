@@ -1,0 +1,40 @@
+<div class="todo-item" *ngIf="!isEditing" [class.overdue]="isOverdue">
+  <div class="todo-content">
+    <span class="todo-title">{{ todo.title }}</span>
+    <div class="todo-badges">
+      <span class="badge priority-{{ todo.priority.toLowerCase() }}">{{ todo.priority }}</span>
+      <span class="badge category">{{ todo.category }}</span>
+      <span class="badge date" *ngIf="todo.dueDate" [class.overdue-text]="isOverdue">
+        Due: {{ todo.dueDate | date:'shortDate' }}
+      </span>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary btn-sm" (click)="startEdit()">✎ Edit</button>
+    <button class="btn btn-success btn-sm" (click)="complete.emit(todo.id)">✓ Complete</button>
+    <button class="btn btn-danger btn-sm" (click)="delete.emit(todo.id)">✕</button>
+  </div>
+</div>
+
+<div class="todo-item edit-mode" *ngIf="isEditing">
+  <div class="edit-inputs">
+    <input type="text" class="input-field" [(ngModel)]="editTitle" placeholder="Task title" />
+    <select class="input-field" [(ngModel)]="editPriority">
+      <option value="Low">Low Priority</option>
+      <option value="Medium">Medium Priority</option>
+      <option value="High">High Priority</option>
+    </select>
+    <select class="input-field" [(ngModel)]="editCategory">
+      <option value="Personal">Personal</option>
+      <option value="Work">Work</option>
+      <option value="Shopping">Shopping</option>
+      <option value="Health">Health</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="date" class="input-field" [(ngModel)]="editDueDate" />
+  </div>
+  <div class="actions">
+    <button class="btn btn-success btn-sm" (click)="saveEdit()">Save</button>
+    <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+  </div>
+</div>

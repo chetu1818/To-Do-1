@@ -1,0 +1,75 @@
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+  transition: var(--transition);
+}
+
+.todo-item.overdue {
+  border-left: 4px solid var(--danger);
+}
+
+.todo-item:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.todo-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.todo-title {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.todo-badges {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.badge {
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+}
+
+.priority-high { color: var(--danger); border-color: var(--danger); }
+.priority-medium { color: #f59e0b; border-color: #f59e0b; }
+.priority-low { color: var(--success); border-color: var(--success); }
+.category { color: var(--primary); }
+
+.overdue-text {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-mode {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.edit-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.edit-inputs > .input-field {
+  flex: 1 1 200px;
+}

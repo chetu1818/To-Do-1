@@ -1,0 +1,43 @@
+.history-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  border: 1px solid var(--surface-border);
+  gap: 0.5rem;
+}
+
+.history-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.deleted {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-success {
+  background: rgba(46, 204, 113, 0.2);
+  color: var(--success);
+}
+
+.badge-danger {
+  background: rgba(231, 76, 60, 0.2);
+  color: var(--danger);
+}

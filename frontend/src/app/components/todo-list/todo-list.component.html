@@ -1,0 +1,52 @@
+<div class="search-container">
+  <input 
+    type="text" 
+    class="input-field search-field" 
+    [(ngModel)]="searchTerm" 
+    placeholder="Search tasks by title or category..."
+  />
+</div>
+
+<div class="add-todo-container">
+  <div class="add-todo-inputs">
+    <input 
+      type="text" 
+      class="input-field" 
+      [(ngModel)]="newTodoTitle" 
+      (keyup.enter)="addTodo()"
+      placeholder="What needs to be done?"
+    />
+    <select class="input-field select-field" [(ngModel)]="newTodoPriority">
+      <option value="Low">Low Priority</option>
+      <option value="Medium">Medium Priority</option>
+      <option value="High">High Priority</option>
+    </select>
+    <select class="input-field select-field" [(ngModel)]="newTodoCategory">
+      <option value="Personal">Personal</option>
+      <option value="Work">Work</option>
+      <option value="Shopping">Shopping</option>
+      <option value="Health">Health</option>
+      <option value="Other">Other</option>
+    </select>
+    <input 
+      type="date" 
+      class="input-field date-field" 
+      [(ngModel)]="newTodoDueDate" 
+    />
+  </div>
+  <button class="btn btn-primary" (click)="addTodo()">Add Task</button>
+</div>
+
+<div class="list-container">
+  <div *ngIf="filteredTodos.length === 0" class="empty-state">
+    No active tasks found.
+  </div>
+  
+  <app-todo-item 
+    *ngFor="let todo of filteredTodos" 
+    [todo]="todo"
+    (complete)="completeTodo($event)"
+    (delete)="deleteTodo($event)"
+    (update)="updateTodo($event)">
+  </app-todo-item>
+</div>
