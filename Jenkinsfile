@@ -1,51 +1,37 @@
 pipeline {
     agent any
-    
     environment {
         FRONTEND_DIR = "D:\\Important\\Projects\\ToDoWeb"
         BACKEND_DIR = "D:\\Important\\Projects\\ToDoApi"
     }
-    
     tools {
         nodejs "NodeJS"
     }
-    
     stages {
         stage('checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/chetu1818/To-Do-1.git'
             }
         }
-        
-        stage('build frontend') {
+        stage('Deploy & Start Apps') {
             steps {
-                dir('frontend') {
+                // Copy all source files to the server directories
+                bat 'xcopy /E /Y /I "%WORKSPACE%\\frontend\\*" "%FRONTEND_DIR%"'
+                bat 'xcopy /E /Y /I "%WORKSPACE%\\backend\\*" "%BACKEND_DIR%"'
+                
+                // Start Frontend (assuming it runs on port 4200)
+                dir("${FRONTEND_DIR}") {
                     bat 'npm install'
-                    bat 'npx ng build --configuration production'
+                    bat 'pm2 restart frontend || pm2 start npm --name "frontend" -- start'
                 }
-            }
-        }
-        
-        stage('Build API') {
-            steps {
-                // Added the dir('backend') block here so npm runs in the right folder
-                dir('backend') {
+                
+                // Start Backend (assuming it runs on port 3000)
+                dir("${BACKEND_DIR}") {
                     bat 'npm install'
                     bat 'npx prisma generate'
+                    bat 'pm2 restart backend || pm2 start npm --name "backend" -- start'
                 }
             }
         }
-        
-        stage('deploy to iis') {
-            steps {
-                // Deploy Angular 
-                // Adjust the dist path if your angular.json outputs to a nested folder like dist/frontend/browser
-                bat 'xcopy /E /Y /I "%WORKSPACE%\\frontend\\dist\\*" "%FRONTEND_DIR%"'
-                
-                // Deploy Node.js
-                // Note: If you want to persist dev.db between builds, you'll need to exclude it from the xcopy overwrite
-                bat 'xcopy /E /Y /I "%WORKSPACE%\\backend\\*" "%BACKEND_DIR%"'
-            }
-        }
-    } // <--- The stages block now correctly closes here, AFTER all stages
+    }
 }
